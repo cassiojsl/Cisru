@@ -1,0 +1,108 @@
+{% extends "base.html" %} {% load static %} {% block nav%} {% endblock %} {% block main %}
+
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+    <!-- Botão Sidebar -->
+
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+
+        
+        <h2 class="text-center">Cadastrar Plantão</h2>
+            <hr>
+        {% block cad%}
+
+        <div class="card-body pt-5">
+            <form class="text-center border border-light p-5 mr-auto" action="{% url 'cad_plantao'%}" method="POST">
+                {% csrf_token %}
+                <div class="w-75 mx-auto">
+                    <div class="form-row mb-2">
+                        <!-- Name -->
+                        <div class="col-4">
+                            <p>Nome do Plantão</p>
+                        </div>
+                        <div class="col-8">
+                            <select class="browser-default custom-select" name="turno">
+                                <option selected disabled>Escolha o nome do Plantão</option>
+                                <option value="NDA">Nenhuma das opções</option>
+                                <option value="Madrugada - A">Madrugada</option>
+                                <option value="Manhã - B">Manhã</option>
+                                <option value="Tarde - C">Tarde</option>
+                                <option value="Noite - D">Noite</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-2">
+                        <div class="col-4">
+                            <p>Intervalo</p>
+                        </div>
+                        <div class="col-8">
+
+                            <select class="browser-default custom-select" name="intervalo">
+                                <option selected disabled></option>
+
+                                <option value="Mad">00:00 as 06:00</option>
+                                <option value="Man">06:00 as 12:00</option>
+                                <option value="Tar">12:00 as 18:00</option>
+                                <option value="Noi">18:00 as 00:00</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-vermelho rounded-pill my-4 " type="submit">Cadastrar Plantão</button>
+                    <hr>
+                </div>
+            </form>
+        </div>
+        {% endblock%}
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+</div> <!-- Fim Wrapper -->
+
+
+
+
+
+{% endblock%}

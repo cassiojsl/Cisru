@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% load static %} {% block nav%} {% endblock %} {% block main %}
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item active">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+    <!-- Botão Sidebar -->
+
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+        
+
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+</div> <!-- Fim Wrapper -->
+
+{% endblock%}

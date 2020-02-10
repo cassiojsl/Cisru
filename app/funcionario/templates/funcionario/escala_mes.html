@@ -1,0 +1,175 @@
+{% extends "base.html" %} {% load static %} {% block main %}
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+
+    <!-- Botão Sidebar -->
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+        <h2 class="text-center">Escala</h2>
+            <hr>
+        <!-- Dayoff table -->
+        <div class="d-flex justify-content-center mb-3">
+            <a href="{% url 'pdf' %}" class="btn btn-vermelho rounded-pill">Exportar escala como Pdf</a>
+        </div>
+        
+
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm text-center" id="tabela1">
+                    <caption>Escala Tarms</caption>
+                    <thead class="thead-dark">
+                        <tr>
+
+                            <th scope="row" rowspan="3" class="text-center pb-5">Nomes</th>
+                            <th scope="col" colspan="8" class="text-center"><span id="week" name="week"></span>: <span
+                                    id="data"></span></th>
+                            <th scope="col" colspan="8" class="text-center">
+                                <i class="fas fa-calendar-alt fa-bolt text-light fa-2x pr-3"></i><span
+                                    class="h3">{{mes}}
+                                </span></th>
+                            <th scope="col" colspan="8" class="text-center">
+                                <form method="GET">
+                                    {% csrf_token%}
+                                    <select class=" browser-default custom-select" id="selected_month"
+                                        name="selected_month">
+                                        <option value=1>Janeiro</option>
+                                        <option value=2>Fevereiro</option>
+                                        <option value=3>Março</option>
+                                        <option value=4>Abril</option>
+                                        <option value=5>Maio</option>
+                                        <option value=6>Junho</option>
+                                        <option value=7>Julho</option>
+                                        <option value=8>Agosto</option>
+                                        <option value=9>Setembro</option>
+                                        <option value=10>Outubro</option>
+                                        <option value=11>Novembro</option>
+                                        <option value=12>Dezembro</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-primary">Selecionar o mês</button>
+                                </form>
+                            </th>
+
+                            <th scope="col" colspan="7" class="text-center"><span id="hora"></span></th>
+                        </tr>
+                        <tr class="table-light table-bordered">
+                            {%for days in range%}
+                            <td>{{ days }}</td>
+                            {%endfor%}
+                        </tr>
+                        <tr class="table-light table-bordered">
+                            {%for days in semana%}
+                            <td>{{days}} </td>
+                            {%endfor%}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fun in escala%}
+                        <tr>
+                            <td class="bg-dark text-light">{{fun.nome}}</td>
+                            {% for i in fun.escala %} {% if i == " A"%}
+                            <td class="bg-success">{{i}}</td>
+                            {% elif i == " B"%}
+                            <td class="bg-info">{{i}}</td>
+                            {% elif i == " C"%}
+                            <td class="bg-warning">{{i}}</td>
+                            {% elif i == " D"%}
+                            <td class="bg-danger">{{i}}</td>
+                            {%elif i == "E"%}
+                            <td class="bg-dark text-light">{{i}}</td>
+                            {%endif%}{% endfor %}
+                        </tr>
+                        {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container mb-5 pb-5">
+            <div class="row">
+                <div class="col">
+                    <table class="table text-center table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Folguistas </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for func in plantonistas%} {% if func.extra == 'Folguista'%}
+                            <tr>
+                                <td class="bg-dark text-light">E</td>
+                                <td>{{func.nome}} {{func.sobrenome}}</td>
+                                {%endif%} {%endfor%}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table text-center table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Folgas aos Domingos </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for folga in domingos%}
+                            <tr>
+                                <td class="bg-dark text-light">Plantonista</td>
+                                <td>Domingo dia : {{folga}}</td>
+                                {%endfor%}
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+
+
+</div> <!-- Fim Wrapper -->
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %} {% load static %} {% block nav%} {% endblock %} {% block main %}
+
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+    <!-- Botão Sidebar -->
+
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+
+        <h2 class="text-center">Cadastrar Folga</h2>
+        <hr>
+        {% block cad%}
+
+            <div class="card-body px-lg-5 pt-5">
+
+                <form class="text-center border border-light p-5 mr-auto" action="{% url 'cad_folga'%}" method="POST">
+                    {% csrf_token %}
+                    <div class="w-75 mx-auto">
+                        <div class="form-row mb-2">
+                            <!-- Name -->
+                            <div class="col-4">
+                                <p>Escolha o Plantão</p>
+                            </div>
+                            <div class="col-8">
+                                <select class="browser-default custom-select" name="plantao">
+                                    {% for i in plantao %}
+                                    {% if i.turno == "NDA"%}
+                                    <option value="{{i.turno}}" selected></option>
+                                    {%else%}
+                                    <option value="{{i.turno}}">{{i.turno}}</option>
+                                    {%endif%}
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row mb-2">
+                            <div class="col-4">
+                                <p>Defina a Data do Primeiro Plantão</p>
+                            </div>
+                            <div class="col-8">
+                                <div class="input-group date" data-provide="datepicker">
+                                    <input type="text" class="form-control" name="data" id="datepicker_folga">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-vermelho my-4 rounded-pill" type="submit">Cadastrar Folga</button>
+                        <hr>
+                    </div>
+                </form>
+            </div> {% endblock%}
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+</div> <!-- Fim Wrapper -->
+
+
+
+
+
+
+{% endblock%}

@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% load static %} {% block nav%} {% endblock %} {% block main %}
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+    <!-- Botão Sidebar -->
+
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+        <div class="container mb-5">
+
+            <h2 class="text-center">Cadastro</h2>
+            <hr>
+            <div class="row mx-auto">
+
+                <div class="col-md-6 col-sm-12 mt-5">
+                    <a href="{% url 'cad_plantao'%}" class="btn btn-vermelho p-4 btn-lg rounded-lg d-flex justify-content-center align-items-center  w-75 mx-auto">
+                        <i class="fas fa-user-clock mr-3"></i>
+                        <span style="font-size:1.1rem;">Plantão</span>
+                    </a>
+                </div>
+
+
+
+                <div class="col-md-6 col-sm-12 mt-5">
+                    <a href="{% url 'cad_func'%}" class="btn btn-vermelho p-4 btn-lg rounded-lg d-flex justify-content-center align-items-center w-75 mx-auto">
+                        <i class="fas fa-user mr-3"></i></i>
+                        <span style="font-size:1.1rem;">Funcionário</span>
+                    </a>
+                </div>
+
+            </div> <!-- row -->
+
+            <div class="row mx-auto">
+
+
+                <div class="col-md-6 col-sm-12 mt-5">
+                    <a href="{% url 'cad_folga'%}" class="btn btn-vermelho p-4 btn-lg rounded-lg d-flex justify-content-center align-items-center w-75 mx-auto">
+                        <i class="fas fa-user-check mr-5"></i></i>
+                        <span style="font-size:1.1rem;">Folga</span>
+                    </a>
+                </div>
+
+                <div class="col-md-6 col-sm-12 mt-5">
+                    <a href="{% url 'cad_plantao_extra'%}"  class="btn btn-vermelho p-4 btn-lg rounded-lg d-flex justify-content-center align-items-center w-75 mx-auto">
+                        <i href="{% url 'cad_plantao_extra'%}"  class="fas fa-user-plus mr-3"></i>
+                        <span style="font-size:1.1rem;">Plantão Extra</span>
+                    </a>
+                </div>
+
+            </div> <!-- row -->
+
+        </div> <!-- container -->
+
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+</div> <!-- Fim Wrapper -->
+
+{% endblock%}

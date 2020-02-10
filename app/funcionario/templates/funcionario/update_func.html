@@ -1,0 +1,119 @@
+{% extends "base.html" %} {% load static %} {% block nav%} {% endblock %} {% block main %}
+
+
+
+<div class="wrapper">
+
+    <div class="sidebar vermelho">
+        <div class="sidebar-header">
+            <img src="{% static 'imgs/cisru-logo.png' %}" id="logo">
+        </div>
+        <ul class="side-links">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home'%}">Início</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'listar_func'%}">Funcionários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'escala_mes'%}">Escala</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'cadastro'%}" class="nav-link">Cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'plantao_dia'%}" class="nav-link">
+                    Folgas </a>
+            </li>
+
+        </ul>
+
+        <a id="sair-btn" href="{% url 'logout_manager' %}" class="btn btn-light rounded-pill mb-0">Sair</a>
+
+
+    </div> <!-- Fim Sidebar -->
+
+
+    <!-- Botão Sidebar -->
+
+    <nav class="navbar navbar-dark justify-content-end" id="side-nav">
+        <button type="button" id="sidebarCollapse" class="btn btn-vermelho btn-sm side-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+
+    <!-- Conteúdo da página -->
+    <div id="content">
+
+        {% block cad%}
+
+            <div class="card-body px-lg-5 pt-5">
+                <h2 class="text-center">Atualizar Funcionário</h2>
+                <hr>
+                <form class="text-center border border-light p-5 mr-auto" method="POST" style="color: #757575;" action="{% url 'cad_func'%}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col">
+                            <!-- First name -->
+                            <div class="md-form align-icon">
+                                <input type="text" id="materialRegisterFormFirstName" class="form-control pb-2" name="nome" value="{{funcionarios.nome}} " required>
+                                <label for="materialRegisterFormFirstName">Nome</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <!-- Last name -->
+                            <div class="md-form">
+                                <input type="text" id="materialRegisterFormLastName" class="form-control" name="sobrenome" required value="{{funcionarios.sobrenome}}">
+                                <label for="materialRegisterFormLastName">Sobrenome</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Plantão -->
+
+                    <select class="browser-default custom-select" name="turno">
+                        {% for i in plantao %}
+                        {% if i.turno == "NDA"%}
+                        <option value="{{i.turno}}" selected>Sem Plantão Definido</option>
+                        {%else%}
+                        <option value="{{i.turno}}">{{i.turno}}</option>
+                        {%endif%}
+                        {%endfor%}
+                    </select>
+                    </select>
+                    <!-- Folguista / Feirista  -->
+                    <div class="custom-control custom-radio custom-control-inline mt-4">
+                        <input type="radio" class="custom-control-input" id="defaultInline1" name="folguista" value="{{func.extra.folguista}}">
+                        <label class="custom-control-label" for="defaultInline1">Folguista</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline mt-4">
+                        <input type="radio" class="custom-control-input" id="defaultInline2" name="feirista" value="{{func.extra.feirista}}">
+                        <label class="custom-control-label" for="defaultInline2">Feirista</label>
+                    </div>
+                    <!-- Sign up button -->
+
+                    <div class="md-form">
+                        <button class="btn btn-vermelho rounded-pill my-4 " type="submit">Atualizar</button>
+                        <button class="btn btn-vermelho rounded-pill my-4 " type="reset">Limpar
+                            Campos</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>{% endblock%}
+
+    </div> <!-- Fim Conteúdo Página -->
+
+
+
+
+
+
+</div> <!-- Fim Wrapper -->
+
+
+
+
+
+
+
+{% endblock%}
